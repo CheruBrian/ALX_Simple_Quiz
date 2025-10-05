@@ -1,60 +1,32 @@
-// Wait until the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', function() {
+// Define the function to check the user's answer
+function checkAnswer() {
+    // Step 1: Define the correct answer
+    const correctAnswer = "4";
 
-    // --- Arithmetic functions ---
-    function add(number1, number2) {
-        return number1 + number2;
+    // Step 2: Get the user's selected answer
+    const selectedOption = document.querySelector('input[name="quiz"]:checked');
+
+    // Step 3: Get the feedback element
+    const feedback = document.getElementById('feedback');
+
+    // Step 4: Handle cases where no option is selected
+    if (!selectedOption) {
+        feedback.textContent = "Please select an answer before submitting!";
+        feedback.style.color = "#dc3545"; // red color for error
+        return;
     }
 
-    function subtract(number1, number2) {
-        return number1 - number2;
+    const userAnswer = selectedOption.value;
+
+    // Step 5: Compare the user's answer with the correct one
+    if (userAnswer === correctAnswer) {
+        feedback.textContent = "Correct! Well done.";
+        feedback.style.color = "#28a745"; // green for success
+    } else {
+        feedback.textContent = "That's incorrect. Try again!";
+        feedback.style.color = "#dc3545"; // red for incorrect
     }
+}
 
-    function multiply(number1, number2) {
-        return number1 * number2;
-    }
-
-    function divide(number1, number2) {
-        if (number2 === 0) {
-            return "Error: Cannot divide by zero";
-        }
-        return number1 / number2;
-    }
-
-    // --- Helper to get input values ---
-    function getNumbers() {
-  document.getElementById('add').addEventListener('click', function() {
-    const number1 = parseFloat(document.getElementById('number1').value) || 0;
-    const number2 = parseFloat(document.getElementById('number2').value) || 0;
-    const result = add(number1, number2);
-    document.getElementById('calculation-result').textContent = result;
-});
-
-    // --- Display result ---
-    function displayResult(result) {
-        document.getElementById('calculation-result').textContent = result;
-    }
-
-    // --- Add event listeners ---
-    document.getElementById('add').addEventListener('click', function() {
-        const { number1, number2 } = getNumbers();
-        displayResult(add(number1, number2));
-    });
-
-    document.getElementById('subtract').addEventListener('click', function() {
-        const { number1, number2 } = getNumbers();
-        displayResult(subtract(number1, number2));
-    });
-
-    document.getElementById('multiply').addEventListener('click', function() {
-        const { number1, number2 } = getNumbers();
-        displayResult(multiply(number1, number2));
-    });
-
-    document.getElementById('divide').addEventListener('click', function() {
-        const { number1, number2 } = getNumbers();
-        displayResult(divide(number1, number2));
-    });
-
-});
-
+// Step 6: Add an event listener to the Submit button
+document.getElementById('submit-answer').addEventListener('click', checkAnswer);
